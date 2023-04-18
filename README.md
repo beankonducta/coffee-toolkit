@@ -38,7 +38,7 @@ Espresso tool helps dial in espresso, from initial suggestions when starting wit
 
 ```
 clone this repo
-cd espresso-tools
+cd espresso-tool
 npm i
 ```
 To run locally:
