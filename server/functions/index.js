@@ -77,27 +77,21 @@ exports.deleteEspressoRecord = functions.https.onRequest(async (request, respons
 });
 
 // fetches an espresso suggestion from chat ai, based on the provided query
-exports.fetchChatAiEspressoSuggestion = functions.https.onRequest(async (request, response) => {
-    const query = request.body.query;
-    if (!query) {
-        response.status(400).send("Query is required");
+exports.fetchEspressoSuggestion = functions.https.onRequest(async (request, response) => {
+    const espresso = request.body.espresso;
+    if (!espresso) {
+        response.status(400).send("Espresso is required");
         return;
     }
-    const res = await ai.complete({
-        engine: "davinci",
-        prompt: query,
-        maxTokens: 5,
-        temperature: 0.9,
-        topP: 1,
-        presencePenalty: 0,
-        frequencyPenalty: 0,
-        bestOf: 1,
-        n: 1,
-        stream: false,
-        stop: ["\n", " User:", " AI:"]
-    });
+    const previousSuggestions = request.body.previousSuggestions;
+    const previousSuggestionsMsg = previousSuggestions ? "Your previous suggestions, including the resulting tasting notes, were:" + previousSuggestions : "";
+    const query = `I'm trying to dial in a ${espresso.processing} ${espresso.country} espresso. It's a ${espresso.roast} roast level. It was roasted on ${espresso.roastDate}. The tasting notes listed on the bag are ${espresso.tastingNotes}. ${previousSuggestionsMsg } Can you suggest a recipe? Please include dose, yield and time. Please format your response as such: "dose: 18g, yield: 30g, time: 25s". Do not include any additional text. Thank you.`
+    const res = await ai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: 'user', content: query}],
+      });
     response.set('Access-Control-Allow-Origin', '*');
-    response.status(200).send(JSON.stringify(res.data));
+    response.status(200).send(JSON.stringify(res.data.choices[0].message.content));
 });
 
 // logs in a user with email and password
