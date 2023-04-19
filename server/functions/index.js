@@ -1,10 +1,14 @@
-var functions = require("firebase-functions");
-var admin = require('firebase-admin');
-var serviceAccount = require("./firebase-credentials.json");
+const functions = require("firebase-functions");
+const admin = require('firebase-admin');
+const serviceAccount = require("./firebase-credentials.json");
 require('dotenv').config();
-var openai = require("openai")
+const { Configuration, OpenAIApi } = require("openai");
 
-const ai = new openai(process.env.OPENAI_API_KEY);
+const aiConfig = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY
+});
+
+const ai = new OpenAIApi(aiConfig);
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -31,15 +35,16 @@ exports.readEspressoRecord = functions.https.onRequest(async (request, response)
         return;
     }
     const res = await admin.firestore().collection('espresso').doc(id).get();
+    console.log(res)
     response.set('Access-Control-Allow-Origin', '*');
-    response.status(200).send(JSON.stringify(res));
+    response.status(200).send(JSON.stringify(res.data()));
 });
 
 // reads all espresso records
 exports.readEspressoRecords = functions.https.onRequest(async (request, response) => {
     const res = await admin.firestore().collection('espresso').get();
     response.set('Access-Control-Allow-Origin', '*');
-    response.status(200).send(JSON.stringify(res));
+    response.status(200).send(JSON.stringify(res.docs.map(doc => doc.data())));
 });
 
 // updates a specific espresso record
