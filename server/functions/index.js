@@ -93,35 +93,3 @@ exports.fetchEspressoSuggestion = functions.https.onRequest(async (request, resp
     response.set('Access-Control-Allow-Origin', '*');
     response.status(200).send(JSON.stringify(res.data.choices[0].message.content));
 });
-
-// logs in a user with email and password
-exports.emailPasswordLogin = functions.https.onRequest(async (request, response) => {
-    const email = request.body.email;
-    const pass = request.body.pass;
-    if (!email || !pass) {
-        response.status(400).send("Email and password are required");
-        return;
-    }
-    await admin.auth().signInWithEmailAndPassword(email, pass);
-    response.set('Access-Control-Allow-Origin', '*');
-    response.status(200).send(JSON.stringify("Successfully logged in"));
-});
-
-// logs out a user
-exports.logout = functions.https.onRequest(async (request, response) => {
-    await admin.auth().signOut();
-    response.set('Access-Control-Allow-Origin', '*');
-    response.status(200).send(JSON.stringify("Successfully logged out"));
-});
-
-// sends a password reset email to the provided email address
-exports.resetPassword = functions.https.onRequest(async (request, response) => {
-    const email = request.body.email;
-    if (!email) {
-        response.status(400).send("Email is required");
-        return;
-    }
-    await admin.auth().sendPasswordResetEmail(email);
-    response.set('Access-Control-Allow-Origin', '*');
-    response.status(200).send(JSON.stringify("Password reset email sent"));
-});
