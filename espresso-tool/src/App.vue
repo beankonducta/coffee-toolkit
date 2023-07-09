@@ -22,6 +22,10 @@ body {
   font-family: sans-serif;
   background-color: rgb(10, 0, 10);
 }
+
+* {
+  text-transform: uppercase;
+}
 #app {
   width: 100%;
 }

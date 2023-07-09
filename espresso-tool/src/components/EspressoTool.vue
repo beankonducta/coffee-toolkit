@@ -1,6 +1,16 @@
 <template>
   <div>
     <div class="espresso">
+      <div id="about-container">
+        <h1>Espresso Dial-in helper</h1>
+      <h2>This is a GPT based tool to find suggested recipes for espresso. your mileage <b>will</b> vary.</h2>
+      </div>
+      <div id="logo-container">
+        <div id="logo-inner-container">
+        <img id="inner-logo" src="../assets/coffee-tools-logo-01.svg">
+        <img id="outer-logo" src="../assets/coffee-tools-logo-02.svg">
+        </div>
+      </div>
       <div class="user-input-right">
         <h2>Coffee Info</h2>
         <label>Country</label>
@@ -140,6 +150,20 @@ export default {
   .button-bar {
     width: 90%;
   }
+  #logo-container {
+  display: none;
+}
+
+#about-container {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  width: 200px;
+}
+
+#about-container h1 {
+  display: none;
+}
 }
 
 @media screen and (min-width: 1100px) {
@@ -147,16 +171,29 @@ export default {
   .button-bar {
     width: 50%;
   }
+  #logo-container {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 200px;
+}
+
+#about-container {
+  position: absolute;
+  top: 300px;
+  left: 15px;
+  width: 200px;
+}
 }
 
 .espresso {
   background-color: rgb(10, 0, 10);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  border: 1px solid rgb(208, 255, 0);
+  border: 1px solid #9ACA3C;
   margin: 0 auto;
   border-radius: 15px;
-  color: rgb(208, 255, 0);
+  color: #9ACA3C;
   padding: 10px;
   margin-top: 20px;
 }
@@ -176,9 +213,9 @@ h2 {
 }
 
 button {
-  background-color: rgb(208, 255, 0);
+  background-color: #3caeca;
   color: rgb(10, 0, 10);
-  border: 1px solid rgb(208, 255, 0);
+  border: 1px solid #3caeca;
   padding: 5px;
   width: 150px;
   font-size: 1em;
@@ -190,11 +227,11 @@ button {
 
 button:hover {
   background-color: rgb(10, 0, 10);
-  color: rgb(208, 255, 0);
+  color: #3caeca;
 }
 
 button:hover:disabled {
-  background-color: rgb(208, 255, 0);
+  background-color: #3caeca;
   color: rgb(10, 0, 10);
   cursor: not-allowed;
 }
@@ -214,8 +251,8 @@ textarea[disabled] {
 input,
 textarea {
   background-color: rgb(10, 0, 10);
-  color: rgb(208, 255, 0);
-  border: 1px solid rgb(208, 255, 0);
+  color: #3caeca;
+  border: 1px solid #3caeca;
   padding: 5px;
   margin: 5px;
   width: 90%;
@@ -225,13 +262,17 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: rgb(208, 255, 0);
+  color: #9ACA3C;
   font-family: BNMainz;
 }
 
 input:focus,
 textarea:focus {
   outline: none;
+}
+
+b {
+  text-decoration: underline;
 }
 
 label {
@@ -251,7 +292,7 @@ label {
 
 .user-input-right {
   padding: 15px;
-  border-right: 1px solid rgb(208, 255, 0);
+  border-right: 1px solid #9ACA3C;
 }
 
 .user-input-left {
@@ -266,6 +307,10 @@ label {
   padding: 15px;
 }
 
+.full-header {
+  width: 100%;
+}
+
 .error {
   color: rgb(255, 0, 106);
   font-family: BNMainz;
@@ -274,4 +319,39 @@ label {
   margin: 0 auto;
   margin-top: 10px;
 }
+
+#logo-inner-container {
+  position: relative;
+  width: 100%;
+}
+
+#inner-logo {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#outer-logo {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+  }
 </style>
