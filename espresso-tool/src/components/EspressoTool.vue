@@ -155,10 +155,11 @@ export default {
 }
 
 #about-container {
-  position: absolute;
+  /* position: absolute;
   bottom: 15px;
   left: 15px;
-  width: 200px;
+  width: 200px; */
+  display: none;
 }
 
 #about-container h1 {
