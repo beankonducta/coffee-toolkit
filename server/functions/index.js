@@ -87,7 +87,7 @@ exports.fetchEspressoSuggestion = functions.https.onRequest(async (request, resp
     const previousSuggestionsMsg = previousSuggestions ? "Your previous suggestions, including the resulting tasting notes, were:" + previousSuggestions : "";
     const query = `I'm trying to dial in a ${espresso.processing} ${espresso.country} espresso. It's a ${espresso.roast} roast level. It was roasted on ${espresso.roastDate}. The tasting notes listed on the bag are ${espresso.tastingNotes}. ${previousSuggestionsMsg } Can you suggest a recipe? Please include dose, yield and time. Please format your response as such: "dose: 18g, yield: 30g, time: 25s". Do not include any additional text. Thank you.`
     const res = await ai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4-0125-preview",
         messages: [{ role: 'user', content: query}],
       });
     response.set('Access-Control-Allow-Origin', '*');
